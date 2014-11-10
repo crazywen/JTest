@@ -13,7 +13,7 @@ import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
 
-public class JTest  {
+public class JTest {
 
 	private String Jprivate;
 	public String Jpublic;
@@ -70,20 +70,22 @@ public class JTest  {
 
 		FileWriter writer = new FileWriter("sys.txt");
 		BufferedWriter bw = new BufferedWriter(writer);
-
 		BufferedOutputStream bos = new BufferedOutputStream(
 				new FileOutputStream("sys-.txt"));
+		try {
 
-		for (Entry<Object, Object> entry : set) {
-			String line = entry.getKey() + ":" + entry.getValue();
-			bw.write(line);
-			bw.newLine();
-			bos.write((new String(line + "\n")).getBytes());
+			for (Entry<Object, Object> entry : set) {
+				String line = entry.getKey() + ":" + entry.getValue();
+				bw.write(line);
+				bw.newLine();
+				bos.write((new String(line + "\n")).getBytes());
+			}
+		} finally {
+			bw.flush();
+			bw.close();
+			bos.flush();
+			bos.close();
 		}
-		bw.flush();
-		bw.close();
-		bos.flush();
-		bos.close();
 	}
 
 	public static void readFile() {
